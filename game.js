@@ -27,12 +27,12 @@ function calcGameTree() {
       }
     }
   }
-  console.log(emptyCoords.length);
+
   for (i = 0; i < 9 - gameLevel; i++) {
+    var x=emptyCoords[i][0],
+    y=emptyCoords[i][1];
     childGameStates.push(cloneGameState());
-    childGameStates[i].state[emptyCoords[i][0]][emptyCoords[i][1]] =
-      'O';
-    emptyCoords.shift();
+    childGameStates[i].state[x][y] = 'O';
     console.log(childGameStates[i].toString());
   }
 }
@@ -74,6 +74,11 @@ function gameState(){
 
 function cloneGameState() {
   var g = new gameState();
-  g.state = game.state;
+  var i,j = 0;
+  for (i = 0; i < 3; i++) {
+    for (j = 0; j < 3; j++) {
+      g.state[i][j] = game.state[i][j];
+    }
+  }
   return g;
 }
