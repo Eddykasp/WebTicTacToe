@@ -4,11 +4,23 @@ function playTurn(field) {
   cross(field);
 }
 
+function aiTurn() {
+
+}
+
 function cross(field) {
   field.src = "resources/cross.png";
   field.alt = "Cross";
   field.onclick = "";
   game.fillField('X', Number(field.id.charAt(0)), Number(field.id.charAt(1)));
+  document.getElementById('debug').innerHTML = game.toString();
+}
+
+function nought(field) {
+  field.src = "resources/nought.png";
+  field.alt = "Nought";
+  field.onclick = "";
+  game.fillField('O', Number(field.id.charAt(0)), Number(field.id.charAt(1)));
   document.getElementById('debug').innerHTML = game.toString();
 }
 
