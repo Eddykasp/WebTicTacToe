@@ -2,11 +2,21 @@ var game = new gameState();
 
 function playTurn(field) {
   cross(field);
-  calcGameTree();
+  aiTurn(calcGameTree());
 }
 
-function aiTurn() {
+function aiTurn(gameTreeLevel) {
+  var choice = Math.floor(Math.random() * gameTreeLevel.length);
+  var i = 0,j = 0;
 
+  for (i = 0; i < 3; i++) {
+    for (j = 0; j < 3; j++) {
+      if (game.state[i][j] !== gameTreeLevel[choice].state[i][j]) {
+        nought(document.getElementById(String(i)+j));
+        break;
+      }
+    }
+  }
 }
 
 function calcGameTree() {
@@ -35,6 +45,7 @@ function calcGameTree() {
     childGameStates[i].state[x][y] = 'O';
     console.log(childGameStates[i].toString());
   }
+  return childGameStates;
 }
 
 function cross(field) {
