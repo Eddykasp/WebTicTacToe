@@ -2,10 +2,39 @@ var game = new gameState();
 
 function playTurn(field) {
   cross(field);
+  calcGameTree();
 }
 
 function aiTurn() {
 
+}
+
+function calcGameTree() {
+  var gameLevel = 0, i, j,
+  childGameStates = [],
+  emptyFields = [[true,true,true],
+                 [true,true,true],
+                 [true,true,true]],
+  emptyCoords = [];
+
+  for (i = 0; i < 3; i++) {
+    for (j = 0; j < 3; j++) {
+      if (game.state[i][j] !== " ") {
+        gameLevel++;
+        emptyFields[i][j] = false;
+      } else {
+        emptyCoords.push([i,j]);
+      }
+    }
+  }
+  console.log(emptyCoords.length);
+  for (i = 0; i < 9 - gameLevel; i++) {
+    childGameStates.push(cloneGameState());
+    childGameStates[i].state[emptyCoords[i][0]][emptyCoords[i][1]] =
+      'O';
+    emptyCoords.shift();
+    console.log(childGameStates[i].toString());
+  }
 }
 
 function cross(field) {
@@ -13,7 +42,6 @@ function cross(field) {
   field.alt = "Cross";
   field.onclick = "";
   game.fillField('X', Number(field.id.charAt(0)), Number(field.id.charAt(1)));
-  document.getElementById('debug').innerHTML = game.toString();
 }
 
 function nought(field) {
@@ -21,14 +49,15 @@ function nought(field) {
   field.alt = "Nought";
   field.onclick = "";
   game.fillField('O', Number(field.id.charAt(0)), Number(field.id.charAt(1)));
-  document.getElementById('debug').innerHTML = game.toString();
 }
 
 function gameState(){
   this.state = [[' ', ' ', ' '],
                 [' ', ' ', ' '],
                 [' ', ' ', ' ']];
-  this.fillField = function (pl, row, col) {this.state[row][col] = pl;};
+  this.fillField = function (pl, row, col) {
+    this.state[row][col] = pl;
+  };
   this.toString = function () {
     var i,j,
     str = "";
@@ -40,5 +69,11 @@ function gameState(){
       str += "<br>";
     }
     return str;
-  }
+  };
+}
+
+function cloneGameState() {
+  var g = new gameState();
+  g.state = game.state;
+  return g;
 }
