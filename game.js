@@ -51,14 +51,14 @@ function calcGameTree() {
 function cross(field) {
   field.src = "resources/cross.png";
   field.alt = "Cross";
-  field.onclick = "";
+  field.onclick = function(){};
   game.fillField('X', Number(field.id.charAt(0)), Number(field.id.charAt(1)));
 }
 
 function nought(field) {
   field.src = "resources/nought.png";
   field.alt = "Nought";
-  field.onclick = "";
+  field.onclick = function(){};
   game.fillField('O', Number(field.id.charAt(0)), Number(field.id.charAt(1)));
 }
 
