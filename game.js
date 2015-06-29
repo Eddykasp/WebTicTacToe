@@ -1,8 +1,10 @@
 var game = new gameState();
 
 function playTurn(field) {
-  cross(field);
-  aiTurn(calcGameTree());
+  if (field.class !== 'unclickable') {
+    cross(field);
+    aiTurn(calcGameTree());
+  }
 }
 
 function aiTurn(gameTreeLevel) {
@@ -51,14 +53,14 @@ function calcGameTree() {
 function cross(field) {
   field.src = "resources/cross.png";
   field.alt = "Cross";
-  field.onclick = function(){};
+  field.class = 'unclickable';
   game.fillField('X', Number(field.id.charAt(0)), Number(field.id.charAt(1)));
 }
 
 function nought(field) {
   field.src = "resources/nought.png";
   field.alt = "Nought";
-  field.onclick = function(){};
+  field.class = 'unclickable';
   game.fillField('O', Number(field.id.charAt(0)), Number(field.id.charAt(1)));
 }
 
@@ -92,4 +94,14 @@ function cloneGameState() {
     }
   }
   return g;
+}
+
+function reset() {
+  game = new gameState();
+  var fields = document.getElementsByTagName('img'), i = 0;
+  for(i = 0; i < fields.length; i++) {
+    fields[i].src = "resources/empty.png";
+    fields[i].alt = "Empty Field";
+    fields[i].class = 'clickable';
+  }
 }
